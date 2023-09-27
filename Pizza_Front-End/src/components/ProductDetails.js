@@ -4,11 +4,28 @@ import { useParams } from 'react-router-dom'
 import { CartContext } from '../context/CartContext'
 import { ProductContext } from '../context/Store'
 
+import Select from 'react-select'
+
 const ProductDetails = () => {
 
     const {id} = useParams()
     const {products} = useContext(ProductContext)
     const {addToCart} = useContext(CartContext)
+
+    const sizes = [
+        {
+            size: "small",
+            price: 8
+        },
+        {
+            size: "medium",
+            price: 10
+        },
+        {
+            size: "large",
+            price: 12
+        }
+    ]
 
     const product = products.find((item) => {
         return item.productId === parseInt(id)
@@ -34,8 +51,29 @@ const ProductDetails = () => {
                         <p className='mb-8'>
                             {description}
                         </p>
+                        <div  className='text-xl font-medium mb-6 border-b'>
+                        <select
+                            id="size-selector"
+                            name="size-selector"
+                            className=" py-4 px-8 text-black border-solid"
+                        >
+                        {
+                        sizes.map(item => (
+                            <option
+                            id={item.size}
+                            key={item.size}
+                            value={item.size}
+                            >
+                            {item.size}
+                            </option>
+                        ))
+                        }
+                        </select>
+                        </div>
+                       
+
                         <div className='text-xl font-medium mb-6'>
-                            <button onClick={()=>addToCart(product)} className='bg-primary py-4 px-8 text-white'>
+                            <button onClick={()=>addToCart(productId,product)} className='bg-[#12486B] py-4 px-8 text-white'>
                                 Add to cart
                             </button>
                         </div>
