@@ -7,6 +7,7 @@ import Orders from './pages/Orders'
 import Sidebar from "./components/Sidebar"
 import Header from "./components/Header"
 import Footer from "./components/Footer"
+import Product from "./pages/Product"
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Home/>}/>
           <Route path="/orders" element={<Orders />}/>
+          <Route path="/product" element={<Product />}/>
         </Routes>
         <Sidebar />
         <Footer />
