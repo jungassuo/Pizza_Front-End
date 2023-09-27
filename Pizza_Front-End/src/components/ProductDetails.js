@@ -3,6 +3,9 @@ import { useParams } from 'react-router-dom'
 
 import { CartContext } from '../context/CartContext'
 import { ProductContext } from '../context/Store'
+import { ToppingsContext } from '../context/Topping'
+
+import toast, { Toaster } from 'react-hot-toast';
 
 import Select from 'react-select'
 
@@ -11,25 +14,43 @@ const ProductDetails = () => {
     const {id} = useParams()
     const {products} = useContext(ProductContext)
     const {addToCart} = useContext(CartContext)
+    const {toppings} = useContext(ToppingsContext)
+
+    const [currentSizePrice, setCurrentSizePrice] = React.useState()
+
+    let arr = []
+    toppings.map((val) => {
+        arr.push({value: val.name, label: val.name})
+    })
 
     const sizes = [
         {
-            size: "small",
-            price: 8
+            value: 8,
+            label: "small - 8 $"
         },
         {
-            size: "medium",
-            price: 10
+            label: "medium - 10 $",
+            value: 10
         },
         {
-            size: "large",
-            price: 12
+            label: "large - 12 $",
+            value: 12
         }
     ]
 
     const product = products.find((item) => {
         return item.productId === parseInt(id)
     })
+
+    const checkSubmit = () => {
+        if(currentSizePrice != undefined){
+            addToCart(productId,product)
+        }else{
+            toast('Please select pizza size!', {
+                icon: '⚠️',
+              });
+        }        
+    }
 
     if(!product){
         return <section className='h-screen flex justify-center items-center'>Loading...</section>
@@ -51,35 +72,37 @@ const ProductDetails = () => {
                         <p className='mb-8'>
                             {description}
                         </p>
-                        <div  className='text-xl font-medium mb-6 border-b'>
-                        <select
-                            id="size-selector"
-                            name="size-selector"
-                            className=" py-4 px-8 text-black border-solid"
-                        >
-                        {
-                        sizes.map(item => (
-                            <option
-                            id={item.size}
-                            key={item.size}
-                            value={item.size}
-                            >
-                            {item.size}
-                            </option>
-                        ))
-                        }
-                        </select>
+                        <div  className='text-xl font-medium mb-6'>
+                        <Select
+                                name="colors"
+                                options={sizes}
+                                className="lg:w-1/2 w-full"
+                                classNamePrefix="select"
+                                onChange={setCurrentSizePrice}
+                            />
                         </div>
-                       
-
+                        <div className="container mx-auto mt-20">
+                            
+                            <Select
+                                isMulti
+                                name="colors"
+                                options={arr}
+                                className="lg:w-1/2 w-full"
+                                classNamePrefix="select"
+                            />
+                        </div>
                         <div className='text-xl font-medium mb-6'>
-                            <button onClick={()=>addToCart(productId,product)} className='bg-[#12486B] py-4 px-8 text-white'>
+                            <button onClick={()=> checkSubmit()} className='bg-[#12486B] py-4 px-8 text-white'>
                                 Add to cart
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
+            <Toaster 
+                position="top-right"
+                reverseOrder={false}
+            />
         </section>
     )
 }

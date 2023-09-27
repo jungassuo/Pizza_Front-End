@@ -12,8 +12,6 @@ export default function Product({product}){
 
     const {addToCart} = useContext(CartContext)
 
-    let url = "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pngwing.com%2Fen%2Fsearch%3Fq%3Dpizza&psig=AOvVaw3XC66bXbVrb_-CpnGLUZKw&ust=1695768255959000&source=images&cd=vfe&ved=0CBAQjRxqFwoTCPDvqZbrxoEDFQAAAAAdAAAAABAE"
-
     return(
         <div>
             <div className='border border-[#e4e4e4] h-[300px] mb-4 relative overflow-hidden group transition'>

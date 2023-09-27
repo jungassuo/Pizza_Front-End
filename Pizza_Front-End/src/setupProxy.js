@@ -35,6 +35,6 @@ module.exports = function (app) {
     }
   });
 
-  app.use(productProxy);
+  app.use(productProxy)
   app.use(toppingProxy)
 };

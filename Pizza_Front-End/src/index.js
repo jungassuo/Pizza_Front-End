@@ -8,15 +8,18 @@ import App from './App'
 import ProductProvider from './context/Store'
 import SidebarProvider from './context/SidebarContext'
 import CartProvider from './context/CartContext'
+import ToppingProvider from './context/Topping'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <SidebarProvider>
     <CartProvider>
       <ProductProvider>
-        <React.StrictMode>
-          <App/>
-        </React.StrictMode>
+        <ToppingProvider>
+          <React.StrictMode>
+            <App/>
+          </React.StrictMode>
+        </ToppingProvider>
       </ProductProvider>
     </CartProvider>
   </SidebarProvider>
